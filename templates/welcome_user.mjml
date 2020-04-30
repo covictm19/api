@@ -1,0 +1,42 @@
+<mjml>
+  <mj-head>
+    <mj-include path="base.mjml"/>
+  </mj-head>
+  <mj-body background-color="#F2F2F2">
+    <mj-section>
+      <mj-column padding-top="10px">
+        <!-- <mj-image src="https://blog.constroifacil.com/wp-content/uploads/2019/10/logo_resized_260x49.png" width="300px" /> -->
+        <mj-divider border-color="#2B4154" padding-top="20px"></mj-divider>
+      </mj-column>
+    </mj-section>
+    <mj-section>
+      <mj-column>
+        <mj-text align="center" padding-top="30px">
+            Olá, <strong>{{name}}</strong>
+        </mj-text>
+        <mj-text align="center" padding-top="30px">
+          Antes de completar seu cadastro queremos deixar para você nossos sentimentos pela sua perda, 
+          não é um momento fácil.
+        </mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-section>
+      <mj-column>
+        <mj-button href="https://covictim19.org/" font-size="16px"
+          padding-top="30px"
+          inner-padding="15px 60px"
+          border-radius="5px"
+          background-color="rgba(0, 0, 0, 0.8)">
+          Confirmar
+        </mj-button>
+      </mj-column>
+    </mj-section>
+    <mj-section>
+      <mj-column>
+        <mj-text align="center" padding-top="30px" font-size="14px">
+          Dúvidas?
+        </mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>

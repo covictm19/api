@@ -1,0 +1,6 @@
+<mj-breakpoint width="320px" />
+<mj-font name="Open Sans" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" />
+<mj-attributes>
+    <mj-text color="#2B4154" padding-top="5px" align="center"/>
+    <mj-all font-family="Open Sans, Helvetica, sans-serif" padding="0 10px" line-height="1.4" font-size="16px"/>
+</mj-attributes>

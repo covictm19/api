@@ -1,14 +1,14 @@
 'use strict';
 
 const Password = require('./password'); 
-const Victims = require('./victim');
+const Memories = require('./memory');
 const Users = require('./users');
 
 module.exports = dependencies => ({
   ...Password({
     ...dependencies,
   }),
-  ...Victims({
+  ...Memories({
     ...dependencies
   }),
   ...Users({

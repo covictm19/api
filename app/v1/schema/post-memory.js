@@ -6,5 +6,6 @@ module.exports = Joi => Joi.object({
   age: Joi.number().required().min(1).max(199),
   deathDate: Joi.string().required(),
   description: Joi.string().required(),
-  socialmidia: Joi.string().allow(''),
+  socialmedia: Joi.string().allow(''),
+  picture: Joi.string().allow(''),
 });

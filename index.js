@@ -2,6 +2,7 @@
 
 const http = require('http');
 
+const awsSDK = require('aws-sdk');
 const chalk = require('chalk');
 const crypto = require('crypto');
 const express = require('express');
@@ -11,6 +12,7 @@ const mjml2html = require('mjml');
 const nodemailer = require("nodemailer");
 const path = require('path');
 const responseTime = require('response-time');
+const slugify = require('slugify');
 const JWT = require('jsonwebtoken');
 
 const ObjectId = require('mongodb').ObjectId;
@@ -32,29 +34,33 @@ const {
 
 const apprun = express();
 
-apprun.use(express.json());
+apprun.use(express.json({ limit: '5mb' }));
+
 apprun.use(responseTime());
 apprun.use(cors);
 
 const { routerV1 } = routers({
   app: env.app,
+  config: env,
   mail: env.mail,
-  authorize,
+  db: db(env),
   responseHandler: responseHandler(logger),
   cryptograph: cryptograph({
     cryptoSalt: env.app.cryptoSalt,
     crypto,
   }),
   transportMail: transportMail(env),
-  db: db(env),
+  authorize,
+  awsSDK,
   fs,
   handlebars,
   JWT,
   mjml2html,
   nodemailer,
   logger,
-  path,
   ObjectId,
+  path,
+  slugify,
   validate,
 });
 

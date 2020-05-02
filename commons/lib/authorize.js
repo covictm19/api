@@ -1,7 +1,6 @@
 'use strict';
 
-const authorize = dependencies => async (req, res, next) => {
-  const { jwt } = dependencies;
+const authorize = ({ jwt }) => async (req, res, next) => {
   try {
     const { authorization } = req.headers;
     const [bearer, token] = authorization.split(' ');

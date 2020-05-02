@@ -1,9 +1,8 @@
 'use strict';
 
-const roleType = {
-  1: 'ROLE_USER',
-  2: 'ROLE_PROFESSIONAL',
-};
+const getFromBase64 = value => 
+  Buffer.from(value, 'base64')
+    .toString('utf8');
 
 const Users = dependencies => {
   const {
@@ -13,6 +12,7 @@ const Users = dependencies => {
     mailService,
   } = dependencies;
 
+  
   const createUser = async request => {
     const { user, onSuccess, onError } = request;
 
@@ -30,7 +30,7 @@ const Users = dependencies => {
         const { ops: [createdUser] } = await userRepository.insert(user);
 
         createdUser.password = null;
-        await mailService.welcome(user);
+        await mailService.welcome(createdUser);
 
         createdUser.jwt = await jwt.sign(createdUser);
 
@@ -42,27 +42,22 @@ const Users = dependencies => {
   };
 
   const confirmAccount = async request => {
-    const { user, onSuccess, onError } = request;
+    const { token:rawToken, onSuccess, onError } = request;
 
     try {
-      const date = new Date();
-
-      user.password = await cryptograph.gen(user.password);
-      user.createdAt = date;
-      user.updatedAt = date;
-      user.confirmed = false;
-      user.blocked = false;
-      user.email = user.email.toLowerCase();
-
       {
-        const { ops: [createdUser] } = await userRepository.insert(user);
+        const token = getFromBase64(rawToken);
+        const {_id} = await jwt.verify(token);
 
-        createdUser.password = null;
-        await mailService.welcome(user);
+        const {result} = await userRepository.updateOne({
+          _id
+        }, {
+          $set: {
+            confirmed: true
+          }
+        });
 
-        createdUser.jwt = await jwt.sign(createdUser);
-
-        return onSuccess(201, createdUser);
+        return onSuccess(200, result);
       }
     } catch(err) {
       onError(503, err);

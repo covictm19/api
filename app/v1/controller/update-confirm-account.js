@@ -1,9 +1,9 @@
 'use strict';
 
 module.exports = ({
-  confirmaAccount,
+  confirmAccount,
   responseHandler,
-}) => async (req, res) => confirmaAccount({
-  accountData: req.validData, 
+}) => async (req, res) => confirmAccount({
+  ...req.validData, 
   ...responseHandler(req, res)
 });

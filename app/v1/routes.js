@@ -2,6 +2,7 @@
 
 const routes = dependencies => {
   const {
+    authorize: Authorize,
     controller,
     db,
     logger,
@@ -16,11 +17,14 @@ const routes = dependencies => {
   const { post, get } = schema;
 
   const servicesInstance = services(dependencies);
+  const authorize = Authorize(servicesInstance);
 
   const {
     createLogin,
-    createVictim,
+    createMemory,
     createUser,
+    listMemories,
+    getMemory,
     updateConfirmAccount,
     updatePassword,
   } = controller({
@@ -35,10 +39,13 @@ const routes = dependencies => {
   logger.info('enable routes');
 
   router.post('/user', validate(post.user), createUser);
-  router.post('/victim', validate(post.victim), createVictim);
+  router.post('/memory', authorize, validate(post.memory), createMemory);
   router.post('/login', validate(post.login), createLogin);
-  router.post('/confirm-account', validate(get.accountConfirmation), updateConfirmAccount);
   router.post('/reset-password', validate(post.resetPassword), updatePassword);
+
+  router.get('/memories', listMemories);
+  router.get('/memory/:memoryId', getMemory);
+  router.get('/confirm-account', validate(get.accountConfirmation), updateConfirmAccount);
 
   router.all('/', (req, res) => {
     console.log(`Work fine`);
